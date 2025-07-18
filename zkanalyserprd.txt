@@ -1,0 +1,324 @@
+🔐 
+zkAnalyzer v3.5 — Final PRD
+Solana Validator Observability, Security & Replay Suite
+Single-node, ultra-lightweight, fault-tolerant validator assistant — for AWS Lightsail with zero external infra.
+
+✅ 
+Summary
+OS: Ubuntu 22.04 LTS (Lightsail)
+
+
+Instance: 1 vCPU / 16 GB RAM
+
+
+Max RAM Footprint: ≤ 10.5 GB
+
+
+Max CPU Spike: ≤ 40% (avg < 12%)
+
+
+Disk Usage Cap: ≤ 4.5 GB total
+
+
+No Docker, No K8s, No Redis, No external DB
+
+
+All optional modules are disabled by default
+
+
+📦 
+Core Capabilities
+
+Feature
+Description
+Real-Time Risk Detection
+CPI depth, Anchor panics, CU spikes, signer anomalies
+Geyser-Based Ingest
+Slot, account, transaction events
+Replay Engine
+Slot-by-slot replay for audit/debug
+Prometheus Metrics
+/metrics, /health, /risk_score endpoints
+Alerts
+Slack, webhook, fallback SMS
+TUI Dashboard
+Terminal-based live view of validator state
+SQLite WAL DB
+Local compressed, encrypted event storage
+eBPF System Insight
+aya-based syscall/disk/net profiling
+Plugin Upgrades
+Signed plugin reloads at runtime
+Self-Updater
+Pulls signed .so from GitHub
+Incident Export
+JSON, Markdown, Protobuf bundles
+Drift & Fork Tracker
+Detects slot/fork irregularities over time
+Tamper-Evident Logs
+Merkle-chain for log/audit proof
+Admin Web UI
+Local-only, auth-protected dashboard
+
+🧱 
+Module-by-Module Resource Profile
+
+Module
+RAM
+CPU
+Notes
+Base Core + Risk Engine
+300–400 MB
+~5%
+Always on
+Geyser Listener
+250 MB
+~2–4%
+Buffered ingest
+SQLite Writer
+200 MB
+Negligible
+WAL mode
+Alert Engine
+60 MB
+<1%
+YAML-based
+TUI (on-demand)
+50 MB
+2–3%
+CLI toggle
+Web UI (opt-in)
+120–150 MB
+4–5%
+Auth-only
+Prometheus Metrics
+25 MB
+<1%
+TLS optional
+Replay CLI (slot/tx)
+80 MB
+5–8% burst
+Manual
+eBPF Profiler
+128 MB
+5–8%
+Optional, off by default
+Audit + Drift Watch
+40 MB
+~1%
+Snapshot + diff
+Chaos Mode
+0 MB → stress
+Up to 20%
+Trigger-only
+Plugin Sandbox
+100 MB per .rs
+3–5%
+Signed hooks only
+Config & Log Encryption
+1–2% CPU
+<50 MB overhead
+AES-256 opt-in
+
+🔐 
+Security Hardening
+AES-256 SQLite encryption (optional, at-rest)
+
+
+Merkle Hash Chain Audit Logging (tamper-proof)
+
+
+RBAC CLI Access Tokens (readonly, admin, replay)
+
+
+Webhook Payload Signing (HMAC or JWT)
+
+
+Ed25519 Plugin Signatures
+
+
+TLS for /metrics endpoint
+
+
+Fallback SMS Alerting via LTE/USB modem
+
+
+Self-destruct Hook (secure wipe trigger)
+
+
+🔔 
+Risk & Alert Rules
+Example YAML rule:
+rule: HighCompute
+when:
+  - cu_usage > 900000
+  - anchor_calls > 3
+then:
+  - webhook: https://ops.local/risk-alert
+  - slack: "#validators"
+  - sms: "+91XXXXXXXXXX"
+
+Built-In Rule Types:
+CPI Depth
+
+
+Compute Units
+
+
+Anchor Errors
+
+
+Fork Slot Gaps
+
+
+Validator Lag
+
+
+Config Drift
+
+
+Disk Latency
+
+
+Replay Mismatches
+
+
+
+📈 
+Metrics Exposed
+zk_tx_risk_score
+
+
+zk_slot_gap_total
+
+
+zk_anchor_error_count
+
+
+zk_plugin_crash_count
+
+
+zk_sys_disk_latency_ms
+
+
+zk_syscalls_per_sec
+
+
+zk_fork_spike_avg
+
+
+zk_config_drift_detected
+
+
+🧪 
+Replay & Export
+
+Command
+Output
+zkanalyzer replay --slot 20912345
+Stepwise logs of slot
+zkanalyzer report --tx SIG
+Markdown with visual graphs
+zkanalyzer export --slot X --proto
+Binary zipped incident file
+
+All export bundles stored in:
+~/.zkanalyzer/reports/ (capped ≤ 250 MB total, rotated weekly)
+🧰 
+Optional but Powerful Modules
+
+Feature
+Status
+Trigger
+Chaos Engine
+Disabled
+zkanalyzer chaos --cpu 90%
+eBPF Profiler
+Disabled
+zkanalyzer trace start
+A/B Risk Engine
+Disabled
+Shadow model test mode
+Web UI
+Disabled
+enable_ui = true
+Visual Slot Export
+CLI-triggered
+Generates CPI tree images
+Plugin Extensions
+Empty
+.rs drop-ins allowed with sig
+
+
+🗃️ 
+Disk Storage & Rotation
+
+Component
+Max Size
+Strategy
+SQLite DB
+≤ 2.5 GB
+WAL + daily vacuum + Zstd
+Visual Exports
+≤ 300 MB
+Auto-prune oldest
+eBPF Buffers
+≤ 128 MB
+In-memory ring
+Snapshots
+≤ 10 × 500 KB
+Timestamped
+Audit Chain
+≤ 150 MB
+Merkle-pruned
+
+
+🔄 
+Upgrade & Maintenance
+Signed Plugin Hot-Reload:
+
+
+zkanalyzer upgrade plugin
+Self-Updating Binary:
+
+zkanalyzer upgrade system
+All .so or .rs updates:
+Must be Ed25519 signed
+
+
+Auto-rollback if crash detected
+
+
+SHA256 checksum verified
+
+
+
+✅ 
+Completion & Validation Criteria
+✅ Stably runs 7+ days on Lightsail (16 GB)
+
+
+✅ Alert & webhook delivery within 3s
+
+
+✅ All logs, configs Merkle-auditable
+
+
+✅ TUI, CLI, Web UI function under 11 GB
+
+
+✅ Fallback SMS tested (if enabled)
+
+
+✅ SQLite remains under 2.5 GB after 30d
+
+
+✅ No Docker or Redis dependency
+
+
+✅ CPU usage peaks only during replay or chaos testing
+
+
+
+
+

@@ -1,0 +1,101 @@
+# ZKAnalyzer v3.5 Configuration
+# Solana Validator Observability, Security & Replay Suite
+
+system:
+  # Resource constraints as per PRD
+  max_memory_gb: 10.5      # PRD: ≤10.5GB RAM
+  max_cpu_percent: 40.0    # PRD: ≤40% CPU
+  max_disk_gb: 4.5         # PRD: ≤4.5GB disk
+  dry_run: false           # Set to true for testing without real connections
+  log_level: "info"        # debug, info, warn, error
+  data_dir: "/home/ubuntu/.zkanalyzer"
+
+solana:
+  # Solana network configuration
+  rpc_url: "https://api.mainnet-beta.solana.com"
+  ws_url: "wss://api.mainnet-beta.solana.com"
+  commitment: "confirmed"   # finalized, confirmed, processed
+  
+  geyser:
+    enabled: true
+    endpoint: "http://localhost:10000"
+    buffer_size: 10000
+    timeout_secs: 30
+
+features:
+  # Optional modules (disabled by default per PRD)
+  tui_enabled: false       # Terminal UI dashboard
+  web_ui_enabled: false    # Web-based admin dashboard
+  ebpf_enabled: false      # eBPF system profiler
+  chaos_enabled: false     # Chaos testing engine
+  plugins_enabled: false   # Plugin system
+  audit_enabled: true      # Audit logging (always recommended)
+
+storage:
+  # SQLite database configuration
+  db_path: "/home/ubuntu/.zkanalyzer/zkanalyzer.db"
+  encryption_enabled: false
+  encryption_key: null     # Base64 encoded AES-256 key
+  compression_enabled: true
+  max_db_size_mb: 2500     # PRD: ≤2.5GB
+  vacuum_interval_hours: 24
+
+metrics:
+  # Prometheus metrics endpoint
+  port: 9102               # Port range: 9101-9109
+  tls_enabled: false
+  tls_cert_path: null
+  tls_key_path: null
+  collection_interval_secs: 10
+
+alerts:
+  # Alert system configuration
+  enabled: true
+  rules_path: "/home/ubuntu/.zkanalyzer/rules.yaml"
+  delivery_timeout_secs: 3  # PRD: ≤3 seconds
+  
+  # Notification channels
+  slack_webhook: null       # Slack webhook URL
+  webhook_url: null         # Generic webhook URL
+  
+  # SMS configuration (optional)
+  sms:
+    provider: "twilio"      # SMS provider
+    api_key: null           # Provider API key
+    phone_number: null      # Target phone number
+
+security:
+  # Security and access control
+  rbac_enabled: true
+  admin_token: null         # Admin access token
+  readonly_token: null      # Read-only access token
+  replay_token: null        # Replay access token
+  webhook_signing_enabled: true
+  webhook_signing_key: null # HMAC signing key
+  self_destruct_enabled: false
+
+network:
+  # Network configuration (ports 9101-9109)
+  api_port: 9102           # Main API server
+  ws_port: 9103            # WebSocket server
+  grpc_port: 9104          # gRPC server
+  web_ui_port: 9101        # Web UI (if enabled)
+  bind_address: "0.0.0.0"  # Bind to all interfaces
+
+# Example alert rules (will be loaded from rules.yaml)
+# alert_rules:
+#   - name: "HighCompute"
+#     conditions:
+#       - cu_usage > 900000
+#       - anchor_calls > 3
+#     actions:
+#       - webhook: "https://ops.local/risk-alert"
+#       - slack: "#validators"
+#       - sms: "+91XXXXXXXXXX"
+#   
+#   - name: "SlotGap"
+#     conditions:
+#       - slot_gap > 5
+#     actions:
+#       - webhook: "https://ops.local/slot-gap"
+#       - slack: "#validators"

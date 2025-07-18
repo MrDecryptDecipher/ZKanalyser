@@ -1,0 +1,254 @@
+# ZKAnalyzer v3.5 - Comprehensive .gitignore
+# =============================================
+
+# 🦀 Rust specific
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# 🔧 Build artifacts
+/build/
+/dist/
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# 📊 IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 🔐 Security and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.local
+.env.production
+.env.test
+config/secrets.yaml
+config/production-secrets.yaml
+*.secret
+
+# 📝 Logs and temporary files
+*.log
+logs/
+*.tmp
+*.temp
+/tmp/
+.cache/
+*.pid
+*.seed
+*.pid.lock
+
+# 💾 Database files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+data/
+backups/
+*.backup
+
+# 📊 Monitoring and metrics data
+metrics/
+prometheus/
+grafana/
+*.rrd
+*.metrics
+
+# 🧪 Test artifacts
+test_results/
+coverage/
+*.profraw
+*.profdata
+flamegraph.svg
+perf.data*
+
+# 📦 Package manager artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# 🐳 Container artifacts
+.dockerignore
+Dockerfile*
+docker-compose*.yml
+.docker/
+
+# ☁️ Cloud and deployment
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+.aws/
+.gcp/
+.azure/
+
+# 📱 Mobile and platform specific
+*.ipa
+*.apk
+*.aab
+
+# 🔄 Version control
+.git/
+.gitmodules
+.gitattributes
+
+# 📋 Documentation build artifacts
+docs/_build/
+docs/site/
+*.pdf
+*.epub
+
+# 🎯 ZKAnalyzer specific exclusions
+# Configuration with sensitive data
+config/production.yaml
+config/api-keys.yaml
+config/webhooks.yaml
+
+# Runtime data
+runtime/
+plugins/downloaded/
+plugins/cache/
+audit-logs/
+exports/
+
+# Performance profiling
+*.perf
+*.trace
+*.flame
+profiling/
+
+# Plugin development
+plugins/dev/
+plugins/testing/
+*.plugin.tmp
+
+# Solana specific
+keypairs/
+wallets/
+*.json.key
+
+# Alert testing
+alert-tests/
+webhook-tests/
+
+# Temporary analysis files
+analysis/
+reports/
+*.analysis
+*.report
+
+# PM2 runtime files
+.pm2/
+pm2.log
+ecosystem.config.js.backup
+
+# NGINX temporary files
+nginx.conf.backup
+ssl/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Compiled binaries
+zkanalyzer
+zkanalyzer.exe
+zkanalyzer-cli
+zkanalyzer-cli.exe
+
+# Development tools
+.cargo/
+.rustup/
+rust-toolchain.toml.backup
+
+# Benchmark results
+benchmarks/
+*.bench
+criterion/
+
+# Memory dumps
+*.dmp
+core.*
+vgcore.*
+
+# Network captures
+*.pcap
+*.pcapng
+
+# Temporary plugin files
+*.so.tmp
+*.dll.tmp
+*.dylib.tmp
+
+# Configuration backups
+*.yaml.bak
+*.toml.bak
+*.json.bak
+
+# Runtime state
+state/
+checkpoints/
+snapshots/
+
+# Development databases
+dev.db
+test.db
+local.db
+
+# Temporary exports
+exports/*.json
+exports/*.csv
+exports/*.parquet
+
+# Plugin signatures (keep in repo but exclude temporary)
+plugins/signatures/*.tmp
+plugins/signatures/*.pending
+
+# Keep important files (negative patterns)
+!.gitkeep
+!README.md
+!LICENSE
+!Cargo.toml
+!src/
+!config/test.yaml
+!config/example.yaml
+!deployment/
+!scripts/
+!tests/
+!docs/
+!plugins/examples/
+!.github/

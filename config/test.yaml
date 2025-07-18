@@ -1,0 +1,114 @@
+# ZKAnalyzer Test Configuration
+system:
+  data_dir: "/tmp/zkanalyzer-test"
+  log_level: "debug"
+  max_memory_gb: 10.5
+  max_cpu_percent: 40.0
+  max_disk_gb: 4.5
+  dry_run: true
+  environment: "test"
+
+server:
+  host: "127.0.0.1"
+  port: 9102
+  web_ui_port: 8080
+  metrics_port: 9090
+  workers: 2
+  keep_alive: 30
+  timeout_secs: 10
+
+solana:
+  rpc_url: "https://api.devnet.solana.com"
+  commitment: "confirmed"
+  timeout_secs: 10
+  max_retries: 2
+  retry_delay_ms: 500
+  
+  geyser:
+    enabled: false
+    endpoint: "wss://api.devnet.solana.com"
+    buffer_size: 1000
+    timeout_secs: 10
+
+storage:
+  db_path: "/tmp/zkanalyzer-test/test.db"
+  max_db_size_mb: 100
+  vacuum_interval_hours: 1
+  backup_interval_hours: 1
+  encryption_enabled: false
+  compression_enabled: false
+
+risk_detection:
+  enabled: true
+  max_cpi_depth: 4
+  max_compute_units: 900000
+  max_signers: 10
+  risk_threshold: 0.7
+  
+  weights:
+    cpi_depth: 0.3
+    anchor_panic: 0.25
+    compute_units: 0.25
+    signer_anomaly: 0.2
+
+alerts:
+  enabled: false
+  delivery_timeout_secs: 3
+  rules_path: "/tmp/zkanalyzer-test/alert_rules.yaml"
+
+metrics:
+  enabled: true
+  endpoint: "/metrics"
+  update_interval_secs: 1
+  retention_hours: 1
+  
+  prometheus:
+    enabled: true
+    port: 9090
+    path: "/metrics"
+
+features:
+  tui_enabled: false
+  web_ui_enabled: false
+  ebpf_enabled: false
+  plugins_enabled: false
+  audit_enabled: false
+  replay_enabled: false
+
+security:
+  rbac_enabled: false
+  webhook_signing_enabled: false
+  plugin_signature_verification: false
+  require_plugin_signatures: false
+  self_destruct_enabled: false
+
+logging:
+  level: "debug"
+  format: "pretty"
+  file_path: "/tmp/zkanalyzer-test/test.log"
+  max_file_size_mb: 10
+  max_files: 2
+  compress_rotated: false
+
+performance:
+  worker_threads: 2
+  blocking_threads: 4
+  stack_size_kb: 1024
+  
+  db_pool_size: 5
+  http_pool_size: 10
+  
+  db_timeout_secs: 10
+  http_timeout_secs: 10
+  
+  channel_buffer_size: 100
+  event_buffer_size: 1000
+
+monitoring:
+  health_check_interval_secs: 10
+  metrics_collection_interval_secs: 1
+  log_rotation_interval_hours: 1
+  
+  memory_check_interval_secs: 30
+  cpu_check_interval_secs: 15
+  disk_check_interval_secs: 60
