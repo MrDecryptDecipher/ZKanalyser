@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/MrDecryptDecipher/ZKanalyser)
 [![Security](https://img.shields.io/badge/security-hardened-red.svg)](docs/SECURITY.md)
-[![PRD Compliant](https://img.shields.io/badge/PRD-compliant-success.svg)](zkanalyserprd.txt)
+[![Enterprise Ready](https://img.shields.io/badge/enterprise-ready-success.svg)](docs/)
 [![Production Ready](https://img.shields.io/badge/production-ready-success.svg)](deployment/)
 [![Performance](https://img.shields.io/badge/response-<700ms-brightgreen.svg)](#performance)
 
@@ -411,13 +411,13 @@ graph LR
 - **🔌 Extensible Architecture**: Hot-reloadable plugin system with signature verification
 - **🚀 Production Ready**: PM2/NGINX deployment with comprehensive testing suite
 
-### 📊 Resource Constraints (PRD Compliant)
+### 📊 Performance Specifications
 
-| Resource | Limit | Current Usage |
-|----------|-------|---------------|
-| **Memory** | ≤10.5GB | ~8.2GB |
-| **CPU** | ≤40% | ~25% |
-| **Storage** | ≤4.5GB | ~3.1GB |
+| Resource | Target | Achieved |
+|----------|--------|----------|
+| **Memory Usage** | ≤10.5GB | ~8.2GB |
+| **CPU Usage** | ≤40% | ~25% |
+| **Storage Usage** | ≤4.5GB | ~3.1GB |
 | **Query Response** | ≤700ms | ~45ms |
 | **Alert Delivery** | ≤3s | ~1.2s |
 
@@ -547,9 +547,9 @@ docker-compose up -d
 # config/production.yaml
 system:
   data_dir: "/home/ubuntu/.zkanalyzer/data"
-  max_memory_gb: 10.5      # PRD: ≤10.5GB
-  max_cpu_percent: 40.0    # PRD: ≤40%
-  max_disk_gb: 4.5         # PRD: ≤4.5GB
+  max_memory_gb: 10.5      # Memory limit: ≤10.5GB
+  max_cpu_percent: 40.0    # CPU limit: ≤40%
+  max_disk_gb: 4.5         # Storage limit: ≤4.5GB
 
 server:
   host: "0.0.0.0"
@@ -575,7 +575,7 @@ risk_detection:
 
 alerts:
   enabled: true
-  delivery_timeout_secs: 3  # PRD: ≤3 seconds
+  delivery_timeout_secs: 3  # Alert delivery target: ≤3 seconds
   slack_webhook: "${SLACK_WEBHOOK_URL}"
   
 security:
@@ -672,7 +672,7 @@ The system includes production-ready NGINX configuration with:
 ### 📖 Available Documentation
 - **[API Reference](docs/API.md)**: Complete REST API documentation
 - **[Implementation Status](IMPLEMENTATION_STATUS.md)**: Detailed implementation status
-- **[PRD Requirements](zkanalyserprd.txt)**: Original requirements document
+- **[Architecture Guide](README.md#architecture)**: System architecture and data flows
 
 ## 📄 License
 

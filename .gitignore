@@ -116,6 +116,11 @@ docs/site/
 *.epub
 
 # 🎯 ZKAnalyzer specific exclusions
+# Development reference files
+zkanalyserprd.txt
+*prd.txt
+requirements.txt
+
 # Configuration with sensitive data
 config/production.yaml
 config/api-keys.yaml
